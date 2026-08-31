@@ -5,6 +5,4 @@ Apenas os colaboradores e o dono do álbum pode ver as fotos/vídeos e comentar 
 O projeto ainda não saiu do protótipo mas pretendemos evolui-lo aos poucos.
 
 **Projeto desenvolvido por:**
-_HERNANDES
-NICOLAS
-KAUÃ_
+_HERNANDES, NICOLAS E KAUÃ._
