@@ -1,4 +1,4 @@
-package com.seuprojeto.trevo.model; // declaração do pacote para organizar
+package Trevo.project.model; // declaração do pacote para organizar
 
 import jakarta.persistence.*; // importa as ferramentas JPA(basicamente usa as anotações feitas com o "@" e gera comandos SQL como inserts e selects automaticamente)
 

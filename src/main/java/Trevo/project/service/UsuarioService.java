@@ -1,7 +1,7 @@
-package com.seuprojeto.trevo.service; // definição de pacote
+package Trevo.project.service; // definição de pacote
 
-import com.seuprojeto.trevo.model.Usuario; // importa a classe de modelo Usuario
-import com.seuprojeto.trevo.repository.UsuarioRepository; // importa o repositorio UsuarioRepository
+import Trevo.project.model.Usuario; // importa a classe de modelo Usuario
+import Trevo.project.repository.UsuarioRepository; // importa o repositorio UsuarioRepository
 // importa as anotações do spring abaixo(Autowired e Service assim como esta no final de cada comando)
 import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.stereotype.Service;

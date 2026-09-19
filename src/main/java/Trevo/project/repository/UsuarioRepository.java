@@ -1,6 +1,6 @@
-package com.seuprojeto.trevo.repository;
+package Trevo.project.repository;
 
-import com.seuprojeto.trevo.model.Usuario;
+import Trevo.project.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

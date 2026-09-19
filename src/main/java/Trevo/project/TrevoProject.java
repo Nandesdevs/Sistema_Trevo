@@ -1,4 +1,4 @@
-package Trevo.TrevoProject;
+package Trevo.project;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
