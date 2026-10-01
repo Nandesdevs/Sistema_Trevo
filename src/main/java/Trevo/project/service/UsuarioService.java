@@ -9,14 +9,14 @@ import java.util.Optional;
 @Service 
 public class UsuarioService {
     
-    @Autowired 
+    @Autowired // injeção de dependência
     private UsuarioRepository usuarioRepository;
 
-    public Usuario cadastrar(Usuario usuario){
+    public Usuario cadastrar(Usuario usuario){ // Metodo de cadastro de usuario
         return usuarioRepository.save(usuario);
     }
 
-    public Optional<Usuario> logar (String login, String senha){
+    public Optional<Usuario> logar (String login, String senha){ // Metodo para o usuario logar e verificações
         Optional<Usuario> userResp = usuarioRepository.findByEmailOrTelefoneOrApelido(login, login, login);
         
         if (userResp.isPresent() && userResp.get().getSenha().equals(senha)){
