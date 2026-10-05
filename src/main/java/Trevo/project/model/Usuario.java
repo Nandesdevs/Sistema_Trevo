@@ -22,8 +22,6 @@ public class Usuario {
     private Integer idade;
     private String apelido;
     private String biografia;
-
-    @Column (name = "foto_perfil")
     private String fotoPerfil;
 
     @Column (name = "senha", nullable = false)
