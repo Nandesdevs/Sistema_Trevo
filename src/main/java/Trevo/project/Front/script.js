@@ -104,6 +104,7 @@ function clover(className = "") {
 
 function shell(content) {
   app.innerHTML = `<nav class="topbar">
+    <button class="icon-btn back-btn" aria-label="Voltar" onclick="back()">←</button>
     <a class="brand" href="#/home">${clover("brand-clover")} Trevo</a>
     <input class="search" placeholder="Pesquisar álbuns, fotos ou categorias" aria-label="Pesquisar">
     <div class="nav-actions"><button class="icon-btn" onclick="go('/trash')">🗑</button><button class="icon-btn" onclick="go('/profile')">♙</button><button class="icon-btn" onclick="toggleTheme()">${state.theme === "dark" ? "☀" : "☾"}</button></div>
@@ -186,7 +187,7 @@ function comments() {
 
 function profile() {
   const user = state.user || { name: "Visitante", email: "visitante@trevo.com" };
-  shell(`<section class="page"><div class="page-head"><h1>Perfil</h1></div><form class="profile" id="profile-form"><div class="profile-main"><div class="stats"><div>${state.albums.length}<br><small>Álbuns</small></div><div>${state.categories.length}<br><small>Categorias</small></div><div>0<br><small>Fotos</small></div></div><label class="field">Apelido<input name="name" value="${escapeHtml(user.name)}"></label><label class="field">Biografia<textarea name="bio" placeholder="Conte um pouco sobre você">${escapeHtml(user.bio || "")}</textarea></label><button class="btn">Salvar alterações</button> <button type="button" class="btn secondary" onclick="logout()">Sair da conta</button> <button type="button" class="btn danger" onclick="deleteAccount()">Excluir conta</button></div><div class="profile-photo"><div class="avatar"><img src="assets/logo-trevo-transparente.png" alt="Símbolo do Trevo"></div><h2>${escapeHtml(user.name)}</h2></div></form></section>`);
+  shell(`<section class="page"><div class="page-head"><h1>Perfil</h1></div><form class="profile" id="profile-form"><div class="profile-main"><div class="stats"><div>${state.albums.length}<br><small>Álbuns</small></div><div>${state.categories.length}<br><small>Categorias</small></div><div>0<br><small>Fotos</small></div></div><label class="field">Apelido<input name="name" value="${escapeHtml(user.name)}"></label><label class="field">Biografia<textarea name="bio" placeholder="Conte um pouco sobre você">${escapeHtml(user.bio || "")}</textarea></label><button class="btn">Salvar alterações</button> <button type="button" class="btn danger" onclick="deleteAccount()">Excluir conta</button></div><div class="profile-photo"><div class="avatar"><img src="assets/logo-trevo-transparente.png" alt="Símbolo do Trevo"></div><h2>${escapeHtml(user.name)}</h2></div></form></section>`);
   document.querySelector("#profile-form").onsubmit = (event) => { event.preventDefault(); state.user = { ...user, name: event.currentTarget.name.value, bio: event.currentTarget.bio.value }; save(); toast("Perfil atualizado!"); };
 }
 
@@ -227,10 +228,10 @@ function restoreItem(id) { const item = state.trash.find((entry) => entry.id ===
 function permanentlyDelete(id) { if (confirm("Excluir este item permanentemente?")) { state.trash = state.trash.filter((entry) => entry.id !== id); save(); router(); } }
 function emptyTrash() { if (confirm("Deseja esvaziar a lixeira?")) { state.trash = []; save(); router(); } }
 function deleteComment(id) { if (confirm("Excluir este comentário?")) { state.comments = state.comments.filter((entry) => entry.id !== id); save(); router(); } }
-function logout() { state.user = null; storage.remove("token"); save(); go("/login"); }
 function deleteAccount() { if (confirm("Deseja realmente excluir sua conta?")) { state.user = null; storage.remove("token"); save(); go("/login"); } }
 function openAlbumMenu(id) { openDeleteMenu("album", id); }
 function openCategoryMenu(id) { openDeleteMenu("categoria", id); }
+function back() { route() === "/home" ? go("/login") : history.back(); }
 function toggleTheme() { state.theme = state.theme === "dark" ? "light" : "dark"; localStorage.setItem("trevo-theme", state.theme); document.body.classList.toggle("dark", state.theme === "dark"); router(); }
 
 function router() {
@@ -240,7 +241,7 @@ function router() {
   (pages[route()] || (() => go(state.user ? "/home" : "/login")))();
 }
 
-Object.assign(window, { closeModal, deleteAccount, deleteComment, emptyTrash, go, logout, moveToTrash, openAlbumMenu, openCategoryMenu, openModal, permanentlyDelete, restoreItem, toggleTheme });
+Object.assign(window, { back, closeModal, deleteAccount, deleteComment, emptyTrash, go, moveToTrash, openAlbumMenu, openCategoryMenu, openModal, permanentlyDelete, restoreItem, toggleTheme });
 document.body.classList.toggle("dark", state.theme === "dark");
 window.addEventListener("hashchange", router);
 router();
