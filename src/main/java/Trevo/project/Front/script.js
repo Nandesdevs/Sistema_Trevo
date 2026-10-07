@@ -29,13 +29,24 @@ const storage = {
   remove(key) { localStorage.removeItem(`${CONFIG.storagePrefix}${key}`); },
 };
 
+// Dados antigos ou parcialmente salvos no navegador não devem impedir a
+// aplicação de abrir. Isso pode acontecer após uma atualização do site ou se
+// o armazenamento local for interrompido no meio de uma gravação.
+const storedArray = (key, fallback) => {
+  const value = storage.get(key, fallback);
+  return Array.isArray(value) ? value : fallback;
+};
+
+const storedUser = storage.get("user", seed.user);
+const storedTheme = localStorage.getItem("trevo-theme");
+
 const state = {
-  user: storage.get("user", seed.user),
-  albums: storage.get("albums", seed.albums),
-  categories: storage.get("categories", seed.categories),
-  trash: storage.get("trash", seed.trash),
-  comments: storage.get("comments", seed.comments),
-  theme: localStorage.getItem("trevo-theme") || "light",
+  user: storedUser && typeof storedUser === "object" ? storedUser : seed.user,
+  albums: storedArray("albums", seed.albums),
+  categories: storedArray("categories", seed.categories),
+  trash: storedArray("trash", seed.trash),
+  comments: storedArray("comments", seed.comments),
+  theme: storedTheme === "dark" || storedTheme === "light" ? storedTheme : "light",
 };
 
 function save() {
